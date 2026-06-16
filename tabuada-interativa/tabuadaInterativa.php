@@ -17,41 +17,50 @@ Saída:
 
 <?php
 
-$operacao = $_POST['operacao'];
-$num1 = $_POST['num1'];
+$operacao_raw = $_POST['operacao'];
+$num1_raw = $_POST['num1'];
+
+$operacao = htmlspecialchars($operacao_raw, ENT_QUOTES, 'UTF-8');
+
+if (!is_numeric($num1_raw)) {
+    echo "Por favor, insira um número válido.";
+    exit;
+}
+
+$num1 = (float)$num1_raw;
+$num1_safe = htmlspecialchars($num1_raw, ENT_QUOTES, 'UTF-8');
 
 if ($operacao == 'adicao') {
     for ($i = 1; $i <= 10; $i++) {
         $valorFinalAdicao = $num1 + $i;
-        echo "$num1 + $i = $valorFinalAdicao <br>";
+        echo "$num1_safe + $i = $valorFinalAdicao <br>";
     }
 } elseif ($operacao == 'subtracao') {
     for ($i = 1; $i <= 10; $i++) {
         $valorFinalSubtracao = $num1 - $i;
-        echo "$num1 - $i = $valorFinalSubtracao <br>";
+        echo "$num1_safe - $i = $valorFinalSubtracao <br>";
     }
 } elseif ($operacao == 'multiplicacao') {
     for ($i = 1; $i <= 10; $i++) {
         $valorFinalMultiplicacao = $num1 * $i;
-        echo "$num1 x $i = $valorFinalMultiplicacao <br>";
+        echo "$num1_safe x $i = $valorFinalMultiplicacao <br>";
     }
 } elseif ($operacao == 'divisao') {
     for ($i = 1; $i <= 10; $i++) {
         $valorFinalDivisao = $num1 / $i;
-        echo "$num1 / $i = $valorFinalDivisao <br>";
-    } }
-    elseif ($operacao == 'todos') {
+        echo "$num1_safe / $i = $valorFinalDivisao <br>";
+    }
+} elseif ($operacao == 'todos') {
     for ($i = 1; $i <= 10; $i++) {
         $valorFinalAdicao = $num1 + $i;
         $valorFinalSubtracao = $num1 - $i;
         $valorFinalMultiplicacao = $num1 * $i;
         $valorFinalDivisao = $num1 / $i;
-        echo "$num1 + $i = $valorFinalAdicao | ";
-        echo "$num1 - $i = $valorFinalSubtracao | ";
-        echo "$num1 x $i = $valorFinalMultiplicacao | ";
-        echo "$num1 / $i = $valorFinalDivisao <br>";
+        echo "$num1_safe + $i = $valorFinalAdicao | ";
+        echo "$num1_safe - $i = $valorFinalSubtracao | ";
+        echo "$num1_safe x $i = $valorFinalMultiplicacao | ";
+        echo "$num1_safe / $i = $valorFinalDivisao <br>";
     }
-}
- else {
+} else {
     echo "Operação inválida.";
 }

@@ -19,12 +19,24 @@ Salário Líquido: R$ 2.137,50
 
 <?php
 
-$valorHora = $_POST['valorHora'];
-$qtdHora = $_POST['qtdHora'];
+$valorHora_raw = $_POST['valorHora'];
+$qtdHora_raw = $_POST['qtdHora'];
+
+if (!is_numeric($valorHora_raw) || !is_numeric($qtdHora_raw)) {
+    echo "Por favor, insira apenas números válidos.";
+    exit;
+}
+
+$valorHora = (float)$valorHora_raw;
+$qtdHora = (float)$qtdHora_raw;
+
+$valorHora_safe = htmlspecialchars($valorHora_raw, ENT_QUOTES, 'UTF-8');
+$qtdHora_safe = htmlspecialchars($qtdHora_raw, ENT_QUOTES, 'UTF-8');
+
 $imposto = 0;
+$salarioLiquido = 0;
 
 $salarioBruto = $valorHora * $qtdHora;
-
 
 if ($salarioBruto > 2000) {
     $imposto = $salarioBruto * 0.05;
@@ -33,6 +45,7 @@ if ($salarioBruto > 2000) {
     echo "Imposto aplicado: R$ " . $imposto . "<br>";
     echo "Salário Líquido: R$ " . $salarioLiquido . "<br>";
 } else {
+    $salarioLiquido = $salarioBruto;
     echo "Salário Bruto: R$ " . $salarioBruto . "<br>";
     echo "Salário Líquido: R$ " . $salarioLiquido . "<br>";
 }
